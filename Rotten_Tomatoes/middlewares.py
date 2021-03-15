@@ -14,7 +14,7 @@ import time
 
 options = Options()
 options.headless = False
-driver = webdriver.Firefox(executable_path='./geckodriver')
+driver = webdriver.Firefox(executable_path="./geckodriver")
 
 
 class RottenTomatoesSpiderMiddleware(object):
@@ -62,7 +62,7 @@ class RottenTomatoesSpiderMiddleware(object):
             yield r
 
     def spider_opened(self, spider):
-        spider.logger.info('Spider opened: %s' % spider.name)
+        spider.logger.info("Spider opened: %s" % spider.name)
 
 
 class RottenTomatoesDownloaderMiddleware(object):
@@ -89,11 +89,13 @@ class RottenTomatoesDownloaderMiddleware(object):
         #   installed downloader middleware will be called
 
         logging.log(logging.INFO, "Entered process request inside Middleware!")
-        if 'reviews?type=user' in request.url:
+        if "reviews?type=user" in request.url:
             driver.get(request.url)
             body = driver.page_source
 
-            return  HtmlResponse(driver.current_url, body=body, encoding='utf-8', request=request)
+            return HtmlResponse(
+                driver.current_url, body=body, encoding="utf-8", request=request
+            )
 
         return None
 
@@ -104,7 +106,7 @@ class RottenTomatoesDownloaderMiddleware(object):
         # - return a Response object
         # - return a Request object
         # - or raise IgnoreRequest
-        #driver.close()
+        # driver.close()
         return response
 
     def process_exception(self, request, exception, spider):
@@ -118,4 +120,4 @@ class RottenTomatoesDownloaderMiddleware(object):
         pass
 
     def spider_opened(self, spider):
-        spider.logger.info('Spider opened: %s' % spider.name)
+        spider.logger.info("Spider opened: %s" % spider.name)
